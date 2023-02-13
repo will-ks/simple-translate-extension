@@ -31,10 +31,10 @@ function IndexPopup() {
   useEffect(() => {
     storage
       .get("sourceLanguage")
-      .then((code) => setSourceLanguage(code as keyof typeof languages))
+      .then((code) => code && setSourceLanguage(code as keyof typeof languages))
     storage
       .get("targetLanguage")
-      .then((code) => setTargetLanguage(code as keyof typeof languages))
+      .then((code) => code && setTargetLanguage(code as keyof typeof languages))
   }, [])
   return (
     <div
