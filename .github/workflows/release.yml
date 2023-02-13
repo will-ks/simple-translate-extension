@@ -22,10 +22,8 @@ jobs:
         run: yarn build
       - name: "Zip build"
         run: zip -r simple-translate-extension-chrome-mv3-prod.zip build/chrome-mv3-prod
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: |
-            LICENSE.txt
-            simple-translate-extension-chrome-mv3-prod.zip
+          files: simple-translate-extension-chrome-mv3-prod.zip
+          generate_release_notes: true
