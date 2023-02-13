@@ -3,7 +3,7 @@
   "displayName": "Simple translate extension",
   "version": "0.0.1",
   "description": "Translate the current website. Does not require any permissions.",
-  "author": "willks",
+  "author": "will-ks",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
