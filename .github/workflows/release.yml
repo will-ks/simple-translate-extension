@@ -24,7 +24,7 @@ jobs:
       - name: "Build"
         run: yarn build
       - name: "Zip build"
-        run: zip -r simple-translate-extension-chrome-mv3-prod.zip build/chrome-mv3-prod
+        run: zip -r -j simple-translate-extension-chrome-mv3-prod.zip build/chrome-mv3-prod
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
