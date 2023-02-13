@@ -1,0 +1,26 @@
+name: "tagged-release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Install dependencies"
+        run: yarn
+      - name: "Build"
+        run: yarn build
+      - name: "Zip build"
+        run: zip -r simple-translate-extension-chrome-mv3-prod.zip build/chrome-mv3-prod
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            LICENSE.txt
+            simple-translate-extension-chrome-mv3-prod.zip
