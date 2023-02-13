@@ -1,6 +1,10 @@
-import { CSSProperties, useState } from "react"
+import { CSSProperties, useEffect, useState } from "react"
+
+import { Storage } from "@plasmohq/storage"
 
 import languages from "~languages"
+
+const storage = new Storage()
 
 const visuallyHidden: CSSProperties = {
   position: "absolute",
@@ -23,6 +27,15 @@ function IndexPopup() {
     useState<keyof typeof languages>("auto")
   const [targetLanguage, setTargetLanguage] =
     useState<keyof typeof languages>("auto")
+
+  useEffect(() => {
+    storage
+      .get("sourceLanguage")
+      .then((code) => setSourceLanguage(code as keyof typeof languages))
+    storage
+      .get("targetLanguage")
+      .then((code) => setTargetLanguage(code as keyof typeof languages))
+  }, [])
   return (
     <div
       style={{
@@ -38,9 +51,10 @@ function IndexPopup() {
           id="source-language-select"
           style={formElement}
           value={sourceLanguage}
-          onChange={(e) =>
+          onChange={async (e) => {
             setSourceLanguage(e.target.value as keyof typeof languages)
-          }>
+            await storage.set("sourceLanguage", e.target.value)
+          }}>
           {Object.entries(languages).map(([code, language]) => (
             <option key={code} value={code}>
               {language}
@@ -68,9 +82,10 @@ function IndexPopup() {
           id="target-language-select"
           style={{ ...formElement }}
           value={targetLanguage}
-          onChange={(e) =>
+          onChange={async (e) => {
             setTargetLanguage(e.target.value as keyof typeof languages)
-          }>
+            await storage.set("targetLanguage", e.target.value)
+          }}>
           {Object.entries(languages).map(([code, language]) => (
             <option key={code} value={code}>
               {language}
